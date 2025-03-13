@@ -14,11 +14,19 @@
 <body>
     <h2>Klistra in kundens text</h2>
     <form method="post">
-        <textarea name="kundtext" placeholder="Klistra in text här..."></textarea><br>
+        <textarea name="kundtext" placeholder="Klistra in text här...">{{ request.form.get('kundtext', '') }}</textarea><br>
         <button type="submit">Omvandla</button>
     </form>
     {% if artikelnummer %}
-        <div class="result">Artikelnummer: {{ artikelnummer }}</div>
+        <div class="result">Artikelnummer: 
+            <ul>
+            {% for nummer in artikelnummer %}
+                <li>{{ nummer }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="result">Inga matchningar hittades.</div>
     {% endif %}
 </body>
 </html>
