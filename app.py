@@ -16,9 +16,17 @@ def omvandla_text(text):
     resultat = []
     text = text.lower()
     
+    hittade_produkter = set()
     for produkt, artikelnummer in artikelregister.items():
         if re.search(rf'\b{re.escape(produkt)}\b', text):
             resultat.append(artikelnummer)
+            hittade_produkter.add(produkt)
+    
+    # Hitta ord som inte matchar något i artikelregistret
+    ord_lista = text.split()
+    for ordet in ord_lista:
+        if not any(re.search(rf'\b{re.escape(produkt)}\b', ordet) for produkt in artikelregister.keys()):
+            resultat.append("Okänd")
     
     return resultat if resultat else ["Inga matchningar hittades."]
 
