@@ -20,18 +20,16 @@ def omvandla_text(text):
         if re.search(rf'\b{re.escape(produkt)}\b', text):
             resultat.append(artikelnummer)
     
-    if not resultat:
-        return "Inga matchningar hittades."
-    
-    return ', '.join(resultat)
+    return resultat if resultat else ["Inga matchningar hittades."]
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    artikelnummer = ""
+    artikelnummer = []
+    kundtext = ""
     if request.method == 'POST':
         kundtext = request.form['kundtext']
         artikelnummer = omvandla_text(kundtext)
-    return render_template('index.html', artikelnummer=artikelnummer)
+    return render_template('index.html', artikelnummer=artikelnummer, kundtext=kundtext)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))  # Standardport 5000 om PORT inte sätts
