@@ -16,19 +16,24 @@ def omvandla_text(text):
     resultat = []
     text = text.lower()
     
-    hittade_produkter = set()
-    for produkt, artikelnummer in artikelregister.items():
-        if re.search(rf'\b{re.escape(produkt)}\b', text):
-            resultat.append(artikelnummer)
-            hittade_produkter.add(produkt)
-    
-    # Hitta ord som inte matchar något i artikelregistret
-    ord_lista = text.split()
-    for ordet in ord_lista:
-        if not any(re.search(rf'\b{re.escape(produkt)}\b', ordet) for produkt in artikelregister.keys()):
-            resultat.append("Okänd")
-    
+    # Dela upp texten i rader eller delar baserat på radbrytningar och komma
+    produkter = re.split(r'[\n,]+', text)
+
+    for produkt in produkter:
+        produkt = produkt.strip()  # Ta bort mellanslag runt produkten
+        matchad = False
+        
+        for nyckel, artikelnummer in artikelregister.items():
+            if re.search(rf'\b{re.escape(nyckel)}\b', produkt):
+                resultat.append(artikelnummer)
+                matchad = True
+                break  # Avsluta loopen så fort vi hittar en match
+        
+        if not matchad:
+            resultat.append("Okänd")  # Lägg endast till en "Okänd" per produkt
+
     return resultat if resultat else ["Inga matchningar hittades."]
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
