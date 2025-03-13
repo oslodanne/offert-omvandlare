@@ -34,6 +34,6 @@ def index():
     return render_template('index.html', artikelnummer=artikelnummer)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Standardport 5000 om PORT inte sätts
+    port = int(os.environ.get('PORT', 10000))  # Standardport 5000 om PORT inte sätts
     app.run(host='0.0.0.0', port=port, debug=True)
 
