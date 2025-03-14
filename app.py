@@ -59,12 +59,12 @@ def omvandla_text(text):
         produkt = produkt.strip()  # Ta bort mellanslag runt raden
         matchad = False
 
-        # Ta bort inledande siffror och måttenheter (ex: "11st", "50m")
+        # Rensa bort inledande siffror och enheter (ex: "11st", "50m")
         produkt_rensad = re.sub(r'^\d+\s*(st|m|mm|cm|g|kg)?\s*', '', produkt)
 
-        # Leta efter matchning i artikelregistret
+        # Kolla om någon nyckel i artikelregistret finns i produkt_rensad
         for nyckel in sorted(artikelregister.keys(), key=len, reverse=True):
-            if nyckel.lower() in produkt_rensad:  
+            if nyckel.lower() in produkt_rensad:
                 resultat.append(artikelregister[nyckel])
                 matchad = True
                 break  # Stoppa loopen när vi hittat en match
