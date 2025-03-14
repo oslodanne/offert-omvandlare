@@ -52,25 +52,30 @@ def omvandla_text(text):
     resultat = []
     text = text.lower().strip()
 
-    # Dela upp texten i rader baserat på radbrytningar
     produkter = text.split("\n")
 
     for produkt in produkter:
-        produkt = produkt.strip()  # Ta bort mellanslag runt raden
-        matchad = False
+        produkt = produkt.strip()
+        
+        if not produkt:  # Ignorera tomma rader
+            continue  
 
-        # Rensa bort inledande siffror och enheter (ex: "11st", "50m")
+        print(f"DEBUG - Ursprunglig rad: {produkt}")  
+
         produkt_rensad = re.sub(r'^\d+\s*(st|m|mm|cm|g|kg)?\s*', '', produkt)
 
-        # Kolla om någon nyckel i artikelregistret finns i produkt_rensad
+        print(f"DEBUG - Rensad rad: {produkt_rensad}")  
+
+        matchad = False
+
         for nyckel in sorted(artikelregister.keys(), key=len, reverse=True):
             if nyckel.lower() in produkt_rensad:
                 resultat.append(artikelregister[nyckel])
                 matchad = True
-                break  # Stoppa loopen när vi hittat en match
+                break  
 
         if not matchad:
-            resultat.append("Okänd")  # Lägg bara till "Okänd" en gång per rad
+            resultat.append("Okänd")  
 
     return resultat if resultat else ["Inga matchningar hittades."]
 
