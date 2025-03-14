@@ -46,20 +46,25 @@ artikelregister = {
     "Kantjärn 80x80x8x6000mm" :"DIA111004",
 }
 
+import re
+
 def omvandla_text(text):
     resultat = []
     text = text.lower().strip()
-    
+
     # Dela upp texten i rader baserat på radbrytningar
     produkter = text.split("\n")
 
     for produkt in produkter:
-        produkt = produkt.strip()  # Ta bort mellanslag runt produkten
+        produkt = produkt.strip()  # Ta bort mellanslag runt raden
         matchad = False
 
-        # Leta efter matchning i hela raden
+        # Ta bort inledande siffror och måttenheter (ex: "11st", "50m")
+        produkt_rensad = re.sub(r'^\d+\s*(st|m|mm|cm|g|kg)?\s*', '', produkt)
+
+        # Leta efter matchning i artikelregistret
         for nyckel in sorted(artikelregister.keys(), key=len, reverse=True):
-            if nyckel.lower() in produkt:  # Enklare sökning som undviker regex-strul
+            if nyckel.lower() in produkt_rensad:  
                 resultat.append(artikelregister[nyckel])
                 matchad = True
                 break  # Stoppa loopen när vi hittat en match
