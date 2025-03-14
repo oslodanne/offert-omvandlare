@@ -10,7 +10,7 @@ artikelregister = {
     "nätstöd 30mm": "DWS20A030",
     "speedies 40mm": "DWS20A040",
     "speedies 30mm": "DPS02A030",
-    "nätstöd 40mm": "DWS20A040"
+    "nätstöd 40mm": "DWS20A040",
     "5150#": "DSM5150SE",
     "8150 finger": "DSM8150O",
     "8150# finger": "DSM8150O",
