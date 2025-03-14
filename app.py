@@ -48,7 +48,7 @@ artikelregister = {
 
 def omvandla_text(text):
     resultat = []
-    text = text.lower()
+    text = text.lower().strip()
     
     # Dela upp texten i rader eller delar baserat på radbrytningar och komma
     produkter = re.split(r'[\n,]+', text)
@@ -58,7 +58,7 @@ def omvandla_text(text):
         matchad = False
         
         for nyckel, artikelnummer in artikelregister.items():
-            if re.search(rf'\b{re.escape(nyckel)}\b', produkt):
+            if re.fullmatch(re.escape(nyckel.lower()), produkt):
                 resultat.append(artikelnummer)
                 matchad = True
                 break  # Avsluta loopen så fort vi hittar en match
@@ -67,6 +67,7 @@ def omvandla_text(text):
             resultat.append("Okänd")  # Lägg endast till en "Okänd" per produkt
 
     return resultat if resultat else ["Inga matchningar hittades."]
+
 
 
 @app.route('/', methods=['GET', 'POST'])
