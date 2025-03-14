@@ -56,17 +56,19 @@ def omvandla_text(text):
     for produkt in produkter:
         produkt = produkt.strip()  # Ta bort mellanslag runt produkten
         matchad = False
-        
-        for nyckel, artikelnummer in artikelregister.items():
-            if re.fullmatch(re.escape(nyckel.lower()), produkt):
-                resultat.append(artikelnummer)
+
+        # Sortera artikelregister-nycklarna efter längd för att hitta den längsta möjliga matchen först
+        for nyckel in sorted(artikelregister.keys(), key=len, reverse=True):
+            if re.search(re.escape(nyckel.lower()), produkt):  
+                resultat.append(artikelregister[nyckel])
                 matchad = True
                 break  # Avsluta loopen så fort vi hittar en match
-        
+
         if not matchad:
             resultat.append("Okänd")  # Lägg endast till en "Okänd" per produkt
 
     return resultat if resultat else ["Inga matchningar hittades."]
+
 
 
 
