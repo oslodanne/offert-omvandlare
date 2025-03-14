@@ -65,7 +65,7 @@ def omvandla_text(text):
                 break  # Avsluta loopen så fort vi hittar en match
 
         if not matchad:
-            resultat.append("Okänd")  # Lägg endast till en "Okänd" per produkt
+            resultat.append("Okänd")  # Lägg endast till en "Okänd" per rad om ingen match hittades
 
     return resultat if resultat else ["Inga matchningar hittades."]
 
