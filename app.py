@@ -50,24 +50,25 @@ def omvandla_text(text):
     resultat = []
     text = text.lower().strip()
     
-    # Dela upp texten i rader eller delar baserat på radbrytningar och komma
-    produkter = re.split(r'[\n,]+', text)
+    # Dela upp texten i rader baserat på radbrytningar
+    produkter = text.split("\n")
 
     for produkt in produkter:
         produkt = produkt.strip()  # Ta bort mellanslag runt produkten
         matchad = False
 
-        # Sortera artikelregister-nycklarna efter längd för att hitta den längsta möjliga matchen först
+        # Leta efter matchning i hela raden
         for nyckel in sorted(artikelregister.keys(), key=len, reverse=True):
-            if re.search(re.escape(nyckel.lower()), produkt):  
+            if nyckel.lower() in produkt:  # Enklare sökning som undviker regex-strul
                 resultat.append(artikelregister[nyckel])
                 matchad = True
-                break  # Avsluta loopen så fort vi hittar en match
+                break  # Stoppa loopen när vi hittat en match
 
         if not matchad:
-            resultat.append("Okänd")  # Lägg endast till en "Okänd" per rad om ingen match hittades
+            resultat.append("Okänd")  # Lägg bara till "Okänd" en gång per rad
 
     return resultat if resultat else ["Inga matchningar hittades."]
+
 
 
 
