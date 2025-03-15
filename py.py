@@ -156,4 +156,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 10000))  # Standardport 5000 om PORT inte sätts
+    app.run(host='0.0.0.0', port=port, debug=True)
