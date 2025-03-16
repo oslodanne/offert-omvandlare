@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikelnummer Omvandlare</title>
+    <style>
+        body { display: flex; justify-content: space-between; padding: 20px; background-color: cornsilk; }
+        .container { width: 45%; }
+        .calculation-container { width: 45%; border-left: 2px solid #ccc; padding-left: 20px; }
+        textarea, input { width: 50%; margin-bottom: 10px; }
+        button { width: 50%; }
+        table { width: 50%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        h2,li,td,h3,tr {color:cornflowerblue}
+        
+    </style>
+</head>
+<body>
+
+    <!-- Artikelnummer Omvandling -->
+    <div class="container">
+        <h2>Omvandla kundens text till artikelnummer</h2>
+        <form method="POST">
+            <textarea name="kundtext">{{ kundtext }}</textarea>
+            <br>
+            <button type="submit">Omvandla</button>
+        </form>
+        {% if artikelnummer %}
+            <h3>Artikelnummer:</h3>
+            <ul>
+                {% for nummer in artikelnummer %}
+                    <li>{{ nummer }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+       <style>
+        textarea[name="kundtext"] {
+    height: 250px; /* Justera höjden efter behov */
+}
+
+       </style> 
+    </div>
+
+    <!-- Beräkningsfunktion -->
+    <div class="calculation-container">
+        <h2>Beräkna vikt på rakstål och antal nät</h2>
+        <form method="POST" id="calcForm">
+            <textarea name="calculation_input" id="calculation_input" rows="10" placeholder="Ex:&#10;10st 86&#10;100m2 6150fs">{{ calculation_input }}</textarea>
+            <br>
+            <button type="submit">Beräkna</button>
+            <button type="button" onclick="rensaBeräkning()">Rensa</button>
+        </form>
+    
+        {% if calculation_result %}
+            <h3>Beräknat resultat:</h3>
+            <table id="resultTable">
+                <tr><th>Artikelnummer</th><th>Värde</th></tr>
+                {% for row in calculation_result %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+    
+    <script>
+        function rensaBeräkning() {
+            document.getElementById("calculation_input").value = "";  // Töm textrutan
+            document.getElementById("resultTable").innerHTML = "";   // Ta bort tabellen
+        }
+    </script>
+    
+
+</body>
+</html>
+

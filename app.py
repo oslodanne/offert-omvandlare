@@ -100,6 +100,16 @@ def berakna_varde(input_text):
         "102000fs": {"artikel": "DSM10200O", "tackande_yta": 9.72},
         "12100fs": {"artikel": "DSM12100O", "tackande_yta": 9.45},
         "12150fs": {"artikel": "DSM12150O", "tackande_yta": 9.45},
+        "5150": {"artikel": "DSM5150SE", "tackande_yta": 9.70},
+        "5200": {"artikel": "DSM5200SE", "tackande_yta": 9.10},
+        "6150": {"artikel": "DSM6150SE", "tackande_yta": 9.70},
+        "6200": {"artikel": "DSM6200SE", "tackande_yta": 9.10},
+        "8150SE5": {"artikel": "DSM8150SE5", "tackande_yta": 9.40},
+        "6100": {"artikel": "DSM6100SE", "tackande_yta": 11.58},
+        "7150": {"artikel": "DSM7150SE", "tackande_yta": 11.58},
+        "8150": {"artikel": "DSM8150SE", "tackande_yta": 11.47},
+        "9150": {"artikel": "DSM9150SE", "tackande_yta": 11.16},
+        "10150": {"artikel": "DSM10150SE", "tackande_yta": 10.86},
     }
 
     rader = input_text.lower().strip().split("\n")  # Dela upp inmatningen rad för rad
@@ -117,8 +127,12 @@ def berakna_varde(input_text):
             data = produktdata[kod]
 
             if "vikt_st" in data and "vikt_m" in data:  # Stångprodukter
-                antal = int(antal.replace("st", ""))
-                total_vikt = round(antal * data["vikt_st"], 2)
+                if "m" in antal:
+                    meter = float(antal.replace("m", ""))
+                    total_vikt = round(meter * data["vikt_m"], 2)
+                else:
+                    antal = int(antal.replace("st", ""))
+                    total_vikt = round(antal * data["vikt_st"], 2)
                 resultat.append((data["artikel"], f"{total_vikt}"))  # Endast siffror
 
             elif "tackande_yta" in data:  # Nätprodukter
@@ -130,6 +144,7 @@ def berakna_varde(input_text):
             resultat.append(("Okänd kod", kod))
 
     return resultat
+
 
 
 
