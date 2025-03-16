@@ -104,7 +104,7 @@ def berakna_varde(input_text):
         "5200": {"artikel": "DSM5200SE", "tackande_yta": 9.10},
         "6150": {"artikel": "DSM6150SE", "tackande_yta": 9.70},
         "6200": {"artikel": "DSM6200SE", "tackande_yta": 9.10},
-        "8150SE5": {"artikel": "DSM8150SE5", "tackande_yta": 9.40},
+        "81505": {"artikel": "DSM8150SE5", "tackande_yta": 9.40},
         "6100": {"artikel": "DSM6100SE", "tackande_yta": 11.58},
         "7150": {"artikel": "DSM7150SE", "tackande_yta": 11.58},
         "8150": {"artikel": "DSM8150SE", "tackande_yta": 11.47},
