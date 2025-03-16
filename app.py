@@ -61,7 +61,7 @@ def omvandla_text(text):
 
         print(f"DEBUG - Ursprunglig rad: {produkt}")  
 
-        produkt_rensad = re.sub(r'^\d+\s*(st|m|mm|cm|g|kg)?\s*', '', produkt)
+        produkt_rensad = re.sub(r'(\s+(st|m|mm|cm|g|kg))$', '', produkt)
 
         print(f"DEBUG - Rensad rad: {produkt_rensad}")  
 
